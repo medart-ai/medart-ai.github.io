@@ -1,24 +1,338 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fullscreen PDF Viewer</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden;
-    }
-    embed {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="description" content="Med-Art: Diffusion Transformer for 2D Medical Text-to-Image Generation">
+    <meta name="keywords" content="Medical Image Generation, Diffusion Model, 2D Image Generation, Image Synthesis">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Med-Art: Diffusion Transformer for 2D Medical Text-to-Image Generation</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="stylesheet" href="./static/css/mousehover.css">
+    <link rel="icon" href="./static/images/favicon.svg">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ extensions: ["tex2jax.js"], jax: ["input/TeX", "output/HTML-CSS"], tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], displayMath: [ ['$$','$$'], ["\\[","\\]"] ], processEscapes: true }, "HTML-CSS": { fonts: ["TeX"] } });
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
+
 <body>
-Hello word!
+
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+<!--        <div class="navbar-menu">-->
+<!--            <div class="navbar-start" style="flex-grow: 1; justify-content: center;">-->
+<!--                <a class="navbar-item" href="https://pfriedri.github.io">-->
+<!--                    <span class="icon">-->
+<!--          <i class="fas fa-home"></i>-->
+<!--      </span>-->
+<!--                </a>-->
+
+<!--&lt;!&ndash;                <div class="navbar-item has-dropdown is-hoverable">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a class="navbar-link">&ndash;&gt;-->
+<!--&lt;!&ndash;            More Research&ndash;&gt;-->
+<!--&lt;!&ndash;        </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="navbar-dropdown">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a class="navbar-item" href="https://pfriedri.github.io/medfuncta-io/">&ndash;&gt;-->
+<!--&lt;!&ndash;                            MedFuncta: Modality Agnostic Representations Based on Efficient Neural Fields&ndash;&gt;-->
+<!--&lt;!&ndash;                        </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a class="navbar-item" href="https://pfriedri.github.io/pcdiff-implant-io/">&ndash;&gt;-->
+<!--&lt;!&ndash;            Point Cloud Diffuison Models for Automatic Implant Generation&ndash;&gt;-->
+<!--&lt;!&ndash;        </a>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            </div>-->
+
+<!--        </div>-->
+    </nav>
+
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-1 publication-title"><b>Med-Art</b>:  Diffusion Transformer for 2D Medical Text-to-Image Generation</h1>
+<!--                        <h4 class="title is-4">DGM4MICCAI 2024</h4>-->
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=y6XNTKEAAAAJ&hl=en">Changlu Guo</a>,</span>
+                            <span class="author-block">
+              <a href="https://mortenhannemose.github.io/">Morten Rieger Hannemose</a>,</span>
+                            <span class="author-block">
+              <a href="https://scholar.google.dk/citations?user=bkWG4OYAAAAJ&hl=da">Anders Nymark Christensen</a>,</span>
+                            <span class="author-block">
+
+                        </div>
+
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+Technical University of Denmark, Department of Applied Mathematics and Computer Science</span>
+                        </div>
+
+                        <div class="column has-text-centered">
+                            <div class="publication-links">
+                                <!-- PDF Link. -->
+                                <span class="link-block">
+                                <a href="https://link.springer.com/chapter/10.1007/978-3-031-72744-3_2"
+                                class="external-link button is-normal is-rounded is-dark">
+                                <span class="icon">
+                                <i class="fas fa-file-pdf"></i>
+                                </span>
+                                <span>Paper</span>
+                                </a>
+                                </span>
+                                
+                                <!-- arXiv Link. -->
+                                <span class="link-block">
+                                <a href="https://arxiv.org/abs/2402.19043"
+                                class="external-link button is-normal is-rounded is-dark">
+                                <span class="icon">
+                                <i class="ai ai-arxiv"></i>
+                                </span>
+                                <span>arXiv</span>
+                                </a>
+                                </span>
+
+                                <!-- Code Link. -->
+                                <span class="link-block">
+                                <a href="https://github.com/pfriedri/wdm-3d"
+                                class="external-link button is-normal is-rounded is-dark">
+                                <span class="icon">
+                                <i class="fab fa-github"></i>
+                                </span>
+                                <span>Code</span>
+                                </a>
+                                </span>
+
+                                <!-- Models Link. -->
+<!--                                <span class="link-block">-->
+<!--                                <a href="https://huggingface.co/pfriedri/wdm-3d"-->
+<!--                                class="external-link button is-normal is-rounded is-dark">-->
+<!--                                <span class="icon">-->
+<!--                                <img src="images/hf-logo.svg">-->
+<!--                                </span>-->
+<!--                                <span>Models</span>-->
+<!--                                </a>-->
+<!--                                </span> -->
+                                
+                                <!-- Video Link. -->
+<!--                                <span class="link-block">-->
+<!--                                <a href="https://youtu.be/TD3Vw2HmzM4"-->
+<!--                                class="external-link button is-normal is-rounded is-dark">-->
+<!--                                <span class="icon">-->
+<!--                                <i class="fab fa-youtube"></i>-->
+<!--                                </span>-->
+<!--                                <span>Video</span>-->
+<!--                                </a>-->
+<!--                                </span>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="eyecatcher">
+        <div class="container is-max-desktop">
+            <div class="hero-body">
+                <img src="images/Overview.png">
+                <h2 class="subtitle has-text-centered">
+                    The architecture of Med-Art (the parameters of DiT are shared)
+                </h2>
+            </div>
+        </div>
+    </section>
+    <section class="section" style="background-color:#f5f5f5">
+        <div class="container is-max-desktop">
+            <!-- Abstract. -->
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Abstract</h2>
+                    <div class="content has-text-justified">
+                        <p>
+                            Text-to-image generative models have achieved remarkable breakthroughs in recent years. However, their application in medical image generation still faces significant challenges, including small dataset sizes, and scarcity of medical textual data. To address these challenges, we propose Med-Art, a framework specifically designed for medical image generation with limited data. Med-Art leverages vision-language models to generate visual descriptions of medical images which overcomes the scarcity of applicable medical textual data. Med-Art adapts a large-scale pre-trained text-to-image model, PixArt-$\alpha$, based on the Diffusion Transformer (DiT), achieving high performance under limited data. Furthermore, we propose an innovative Hybrid-Level Diffusion Fine-tuning (HLDF) method, which enables pixel-level losses, effectively addressing issues such as overly saturated colors. We achieve state-of-the-art performance on two medical image datasets, measured by FID, KID, and downstream classification performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+<!--    <section class="section">-->
+<!--        <div class="container is-max-desktop">-->
+<!--            &lt;!&ndash; Abstract. &ndash;&gt;-->
+<!--            <div class="columns is-centered has-text-centered">-->
+<!--                <div class="column is-four-fifths">-->
+<!--                    <h2 class="title is-3">Video</h2>-->
+<!--                    <div class="content has-text-centered">-->
+<!--                        <iframe src="https://www.youtube.com/embed/TD3Vw2HmzM4?si=BjBNnBjUBusVs20l" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--    </section>-->
+
+    <!-- <section class="section">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered has-text-centered">
+                <div class="column is-four-fifths">
+                    <h2 class="title is-3">Video</h2>
+                    <div class="content has-text-centered">
+                        <iframe src="https://www.youtube.com/embed/6oN8CAqCJes?si=1PODln_3UE1S80y-" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+    </section> -->
+
+    <section class="section ">
+        <div class="container is-max-desktop ">
+            <div class="columns is-centered has-text-centered ">
+                <div class="column ">
+                    <h2 class="title is-3 ">Hybrid-Level Diffusion Fine-tuning (HLDF)</h2>
+                    <div class="content has-text-justified ">
+                          <script>
+    window.MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  <p>
+    To address unnaturally saturated colors, we penalize deviations of the color distribution in pixel space. We minimize the difference in the mean $\mu_c$ and standard deviation $\sigma_c$
+    of each color channel $c$ between the input image $x$ and the generated image $\tilde{x}$.
+    The loss is defined as:
+  </p>
+
+  <p>
+    \[
+    \mathcal{L}_{\text{color}} := \mathbb{E}_x\left[\sum_{c} \left(
+      \|\mu_c(\tilde{x}) - \mu_c(x)\|_2^2 +
+      \|\sigma_c(\tilde{x}) - \sigma_c(x)\|_2^2
+    \right)\right]
+    \]
+  </p>
+
+  <p>
+    In order to compute this loss, we need to generate images during training.
+    For this, we use classifier-free guidance with a guidance weight of 4.5,
+    and for sampling, we utilize the DPM-Solver++,
+    which enables the generation of high-quality images in 15–20 steps.
+  </p>
+                          <p>
+    Even with this relatively small number of steps required, this remains a computationally and memory-intensive process to differentiate.
+    To lower the required memory, at the cost of additional compute, we utilize gradient checkpointing. However, we drastically lower the required computation and training time by adopting an interval optimization strategy,
+    where we only compute the loss every $N$ steps. The loss is then:
+  </p>
+
+  <p>
+    \[
+    \mathcal{L}_{\text{HLDF}} =
+    \mathcal{L}_{\text{Pixart-}\alpha\text{+LoRA}} +
+    \begin{cases}
+      \frac{1}{M} \cdot \mathcal{L}_{\text{color}}, & \text{if step} \equiv 0 \mod N \\
+      0, & \text{otherwise}
+    \end{cases}
+    \]
+  </p>
+
+  <p>
+    Here, \( M \) denotes the number of steps employed by DPM Solver++ for image generation during training, where the default value is 20,
+    and \( \frac{1}{M} \) is the weight.
+  </p>
+
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <section class="section ">
+        <div class="container is-max-desktop ">
+            <div class="columns is-centered has-text-centered ">
+                <div class="column ">
+                    <h2 class="title is-3 "> Generation Results</h2>
+                    <div class="has-text-justified">
+                        Samples of generated images: each row shows a text prompt and a corresponding image generated by different methods. Fast-DiT generates images using only class labels instead of text prompts. The images generated by the other methods contain unnaturally saturated colors and are less similar to the real image than the result of Med-Art.
+                    </div><br>
+
+<!--                    <h3 class="title is-5">Brain MRI - BraTs (128 × 128 × 128)</h3>-->
+                    <div class="row_gif">
+
+                          <img src="images/results.png" style="width:100%">
+<!--                        </div>-->
+                    </div><br>
+
+                </div>
+            </div>
+    </section>
+
+    <section class="section " id="BibTeX ">
+        <div class="container is-max-desktop content ">
+            <h2 class="title ">BibTeX</h2>
+            <pre><code>@inproceedings{friedrich2024wdm,
+                title={Wdm: 3d wavelet diffusion models for high-resolution medical image synthesis},
+                author={Friedrich, Paul and Wolleb, Julia and Bieder, Florentin and Durrer, Alicia and Cattin, Philippe C},
+                booktitle={MICCAI Workshop on Deep Generative Models},
+                pages={11--21},
+                year={2024},
+                organization={Springer},
+              }</code></pre>
+        </div>
+    </section>
+
+    <section class="section " id="Acknowledgements ">
+        <div class="container is-max-desktop content ">
+            <h2 class="title ">Acknowledgements</h2>
+            <p>This work was financially supported by the <a href="https://innovationsfonden.dk/da ">Innovation Fund Denmark (IFD)</a> </p>
+        </div>
+    </section>
+
+    <footer class="footer ">
+        <div class="container ">
+<!--            <div class="content has-text-centered ">-->
+<!--                <a class="icon-link " href="https://arxiv.org/abs/2402.19043">-->
+<!--                    <i class="fas fa-file-pdf "></i>-->
+<!--                </a>-->
+<!--                <a class="icon-link " href="https://github.com/pfriedri/wdm-3d" class="external-link " disabled>-->
+<!--                    <i class="fab fa-github "></i>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--            <div class="columns is-centered ">-->
+                <div class="column is-8 ">
+                    <div class="content ">
+                        <p>
+                            This website is licensed under a <a rel="license " href="http://creativecommons.org/licenses/by-sa/4.0/ ">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <p>
+                            This webpage is adepted from the <a href="https://github.com/nerfies/nerfies.github.io ">Nerfies</a> template.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
 </body>
+
 </html>
