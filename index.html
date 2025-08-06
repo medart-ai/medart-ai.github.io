@@ -347,12 +347,13 @@ Department of Applied Mathematics and Computer Science, Technical University of 
     .then(response => response.json())
     .then(data => {
       const location = `${data.city || ''}, ${data.region || ''}, ${data.country || ''}`;
-      document.getElementById("visitor-info").innerText = `🌍 您来自：${location}（IP: ${data.ip}）`;
+      document.getElementById("visitor-info").innerText = `🌍 You are visiting from: ${location} (IP: ${data.ip})`;
     })
     .catch(() => {
-      document.getElementById("visitor-info").innerText = "🌐 无法获取您所在的地区信息";
+      document.getElementById("visitor-info").innerText = "🌐 Unable to determine your location.";
     });
 </script>
+
 
     
 </html>
