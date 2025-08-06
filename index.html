@@ -336,4 +336,23 @@ Department of Applied Mathematics and Computer Science, Technical University of 
 
 </body>
 
+<section class="section">
+  <div class="container has-text-centered">
+    <div id="visitor-info" style="font-size: 14px; color: #444;"></div>
+  </div>
+</section>
+
+<script>
+  fetch("https://ipinfo.io?token=4e4885610ba7ae")
+    .then(response => response.json())
+    .then(data => {
+      const location = `${data.city || ''}, ${data.region || ''}, ${data.country || ''}`;
+      document.getElementById("visitor-info").innerText = `🌍 您来自：${location}（IP: ${data.ip}）`;
+    })
+    .catch(() => {
+      document.getElementById("visitor-info").innerText = "🌐 无法获取您所在的地区信息";
+    });
+</script>
+
+    
 </html>
