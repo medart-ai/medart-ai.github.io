@@ -336,23 +336,16 @@ Department of Applied Mathematics and Computer Science, Technical University of 
 
 </body>
 
-<section class="section">
-  <div class="container has-text-centered">
-    <div id="visitor-info" style="font-size: 14px; color: #444;"></div>
-  </div>
-</section>
+<!-- Visitor Counter: Total and Current Visitors -->
+<div style="text-align: center; padding: 1em 0; font-size: 14px;">
+    Total site visits: <span id="busuanzi_value_site_pv">Loading...</span><br>
+    Current online users: <span id="busuanzi_value_site_uv">Loading...</span><br>
+    You are visitor number <span id="busuanzi_value_page_pv">Loading...</span> to this page
+</div>
 
-<script>
-  fetch("https://ipinfo.io?token=4e4885610ba7ae")
-    .then(response => response.json())
-    .then(data => {
-      const location = `${data.city || ''}, ${data.region || ''}, ${data.country || ''}`;
-      document.getElementById("visitor-info").innerText = `🌍 You are visiting from: ${location} (IP: ${data.ip})`;
-    })
-    .catch(() => {
-      document.getElementById("visitor-info").innerText = "🌐 Unable to determine your location.";
-    });
-</script>
+<script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
 
 
     
